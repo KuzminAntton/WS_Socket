@@ -1,0 +1,112 @@
+package server;
+
+import handler.impl.HelloHandler;
+import method.Request;
+import method.Response;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
+public class Server {
+
+    private ExecutorService pool;
+    private int port;
+    private int poolSize;
+
+    public Server() {
+    }
+
+    public Server(int port, int poolSize) {
+        this.port = port;
+        this.poolSize = poolSize;
+    }
+
+    public void start() throws Throwable {
+
+        pool = Executors.newFixedThreadPool(poolSize);
+        ServerSocket srSocket = new ServerSocket(port);
+        while (true) {
+            Socket sock = srSocket.accept();
+            pool.submit(new SocketProcessor(sock));
+        }
+    }
+
+    public void stop() {
+        pool.shutdown();
+    }
+
+    private static class SocketProcessor implements Runnable {
+
+        private Request rq;
+        private Response rp;
+        private Socket socket;
+
+        private SocketProcessor(Socket socket) throws Throwable {
+//            this.s = s;
+//            this.is = s.getInputStream();
+            this.socket = socket;
+
+        }
+
+        public void run() {
+            try {
+                BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+                rq = new Request();
+                rq.parseRequest(br);
+
+//                System.out.println(rq.toString());
+
+                rp= new Response(socket.getOutputStream());
+                HelloHandler handler = new HelloHandler();
+                handler.handle(rq, rp);
+
+//                System.out.println(rp.toString());
+
+//                writeResponse("hello");
+            } catch (Throwable t) {
+                /*do nothing*/
+                t.printStackTrace();
+            }
+
+            finally {
+                try {
+                    socket.close();
+                } catch (Throwable t) {
+                    /*do nothing*/
+                    t.printStackTrace();
+                }
+            }
+
+        }
+
+//        private void writeResponse(String s) throws Throwable {
+//            String response = "HTTP/1.1 200 OK\r\n" +
+//                    "server.Server: YarServer/2009-09-09\r\n" +
+//                    "Content-Type: text/html\r\n" +
+//                    "Content-Length: " + s.length() + "\r\n" +
+//                    "Connection: close\r\n\r\n";
+//            String result = response + s;
+//            socket.getOutputStream().write(result.getBytes());
+////            os.flush();
+//        }
+
+//        private String readInputHeaders() throws Throwable {
+//            BufferedReader br = new BufferedReader(new InputStreamReader(is));
+//            String  str;
+//            while(true) {
+//                str = br.readLine();
+//                System.out.println(str);
+//
+//                if(str == null || str.trim().length() == 0) {
+//                    break;
+//                }
+//            }
+//
+//            return "Hello";
+//        }
+    }
+}
