@@ -1,11 +1,12 @@
 package method;
 
-import constants.CommonConstants;
+import com.epam.ws_socket.constants.CommonConstants;
+import utils.HttpMethodUtils;
+import utils.SplitUtils;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.List;
 
 public class Request {
 
@@ -150,82 +151,80 @@ public class Request {
         this.body = body;
     }
 
-    public void parseRequest(BufferedReader bfr) throws IOException {
-        Map<String,String> headers = new LinkedHashMap<String, String>();
-        String str = "";
-        String [] strArr;
-        String header;
-        String value = "";
-        while(true) {
-            str = bfr.readLine();
 
-            strArr = str.split(" ");
-
-            header = strArr[0];
-
-            for(int i = 1; i < strArr.length; i++) {
-                value += strArr[i] + " ";
+    public void parseRequest(BufferedReader bfr) {
+            List<String> headerValue = null;
+            try {
+                headerValue = HttpMethodUtils.getHeaderValue(bfr);
+            } catch (IOException e) {
+                e.printStackTrace();
             }
 
-            headers.put(header,value);
-            header = "";
-            value = "";
+            for (String value : headerValue) {
+                if (value.startsWith(CommonConstants.GET)) {
 
+                    method = CommonConstants.GET;
+                    path = SplitUtils.getCertainSplitValueBy(value, CommonConstants.PATH, CommonConstants.SPACE);
+                    version = SplitUtils.getCertainSplitValueBy(value, CommonConstants.VERSION, CommonConstants.SPACE);
 
-            if(str == null || str.trim().length() == 0) {
-                    break;
+                } else if (value.startsWith(CommonConstants.POST)) {
+
+                    method = CommonConstants.POST;
+                    path = SplitUtils.getCertainSplitValueBy(value, CommonConstants.PATH, CommonConstants.SPACE);
+                    version = SplitUtils.getCertainSplitValueBy(value, CommonConstants.VERSION, CommonConstants.SPACE);
+
+                } else if (value.startsWith(CommonConstants.HOST)) {
+
+                    host = SplitUtils.getCertainSplitValueBy(value, CommonConstants.VALUE, CommonConstants.COLON_SPLITTER);
+
+                } else if (value.startsWith(CommonConstants.CONNECTION)) {
+
+                    connection = SplitUtils.getCertainSplitValueBy(value, CommonConstants.VALUE, CommonConstants.COLON_SPLITTER);
+
+                } else if (value.startsWith(CommonConstants.CSP)) {
+
+                    csp = SplitUtils.getCertainSplitValueBy(value, CommonConstants.VALUE, CommonConstants.COLON_SPLITTER);
+
+                } else if (value.startsWith(CommonConstants.CACHE_CONTROL)) {
+
+                    cacheControl = SplitUtils.getCertainSplitValueBy(value, CommonConstants.VALUE, CommonConstants.COLON_SPLITTER);
+
+                } else if (value.startsWith(CommonConstants.USER_AGENT)) {
+
+                    userAgent = SplitUtils.getCertainSplitValueBy(value, CommonConstants.VALUE, CommonConstants.COLON_SPLITTER);
+
+                } else if (value.startsWith(CommonConstants.ACCEPT)) {
+
+                    accept = SplitUtils.getCertainSplitValueBy(value, CommonConstants.VALUE, CommonConstants.COLON_SPLITTER);
+
+                } else if (value.startsWith(CommonConstants.ACCEPT_ENCODING)) {
+
+                    acceptEncoding = SplitUtils.getCertainSplitValueBy(value, CommonConstants.VALUE, CommonConstants.COLON_SPLITTER);
+
+                } else if (value.startsWith(CommonConstants.ACCEPT_LANGUAGE)) {
+
+                    acceptLanguage = SplitUtils.getCertainSplitValueBy(value, CommonConstants.VALUE, CommonConstants.COLON_SPLITTER);
+
+                } else if (value.startsWith(CommonConstants.CONTENT_LENGTH)) {
+
+                    contentLenght = Integer.parseInt(SplitUtils.getCertainSplitValueBy(value, CommonConstants.VALUE,
+                            CommonConstants.COLON_SPLITTER));
+
+                } else if (value.startsWith(CommonConstants.ORIGIN)) {
+
+                    origin = SplitUtils.getCertainSplitValueBy(value, CommonConstants.VALUE, CommonConstants.COLON_SPLITTER);
+
+                } else if (value.startsWith(CommonConstants.CONTENT_TYPE)) {
+
+                    contentType = SplitUtils.getCertainSplitValueBy(value, CommonConstants.VALUE, CommonConstants.COLON_SPLITTER);
                 }
-        }
+            }
 
-        for(Map.Entry<String, String> pair : headers.entrySet()) {
-            if(pair.getKey().contains(CommonConstants.GET)) {
-                setMethod(pair.getKey());
-                setPath(pair.getValue().split(" ")[0]);
-                setVersion(pair.getValue().split(" ")[1]);
-            }
-            if(pair.getKey().contains(CommonConstants.POST)) {
-                setMethod(pair.getKey());
-            }
-            if(pair.getKey().contains(CommonConstants.USER_AGENT)) {
-                setUserAgent(pair.getValue());
-            }
-            if(pair.getKey().contains(CommonConstants.ACCEPT_ENCODING)) {
-                setAcceptEncoding(pair.getValue());
-            }
-            if(pair.getKey().contains(CommonConstants.ACCEPT)) {
-                setAccept(pair.getValue());
-            }
-            if(pair.getKey().contains(CommonConstants.ACCEPT_LANGUAGE)) {
-                setAcceptLanguage(pair.getValue());
-            }
-            if(pair.getKey().contains(CommonConstants.CONNECTION)) {
-                setConnection(pair.getValue());
-            }
-            if(pair.getKey().contains(CommonConstants.CONTENT_LENGTH)) {
-                setContentLenght(Integer.parseInt(pair.getValue()) );
-            }
-            if(pair.getKey().contains(CommonConstants.CONTENT_TYPE)) {
-                setContentType(pair.getValue());
-            }
-            if(pair.getKey().contains(CommonConstants.CACHE_CONTROL)) {
-                setCacheControl(pair.getValue());
-            }
-            if(pair.getKey().contains(CommonConstants.VERSION + "")) {
-                setVersion(pair.getValue());
-            }
-            if(pair.getKey().contains(CommonConstants.HOST)) {
-                setHost(pair.getValue());
-            }
-            if(pair.getKey().contains(CommonConstants.CSP)) {
-                setCsp(pair.getValue());
-            }
-            if(pair.getKey().contains(CommonConstants.ORIGIN)) {
-                setOrigin(pair.getValue());
+            if (contentLenght > 0) {
+                body = headerValue.get(headerValue.size() - 1);
             }
 
         }
-
-    }
 
     @Override
     public String toString() {

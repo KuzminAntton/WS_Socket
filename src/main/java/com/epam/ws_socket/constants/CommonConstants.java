@@ -1,4 +1,4 @@
-package constants;
+package com.epam.ws_socket.constants;
 
 public class CommonConstants {
 

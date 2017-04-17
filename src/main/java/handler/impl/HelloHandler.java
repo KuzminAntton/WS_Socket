@@ -1,5 +1,6 @@
 package handler.impl;
 
+import com.epam.ws_socket.constants.ResponseConstants;
 import handler.IHandle;
 import method.Request;
 import method.Response;
@@ -11,7 +12,7 @@ public class HelloHandler implements IHandle {
     public void handle(Request rq, Response rp) throws IOException {
         boolean isMap = true;
         rp.setVersion(rq.getVersion());
-        rp.setStatusCode("200");
+        rp.setStatusCode(ResponseConstants.STATUS_CODE_200_OK);
         rp.setContentType("text/html");
         FileReader reader = new FileReader("/home/anton/Anton/Visual_Studio_Nodepad/test.html");
 
@@ -21,6 +22,7 @@ public class HelloHandler implements IHandle {
                 str.append((char)c);
             }
         rp.setBody(str.toString());
+        rp.setConnection(ResponseConstants.CONNECTION_VALUE);
         rp.write();
 
     }

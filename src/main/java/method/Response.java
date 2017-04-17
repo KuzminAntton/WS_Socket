@@ -1,7 +1,8 @@
 package method;
 
-import constants.CommonConstants;
-import constants.ResponseConstants;
+
+import com.epam.ws_socket.constants.CommonConstants;
+import com.epam.ws_socket.constants.ResponseConstants;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -30,26 +31,26 @@ public class Response {
 
         responseMap.put(ResponseConstants.SERVER, ResponseConstants.SERVER_VALUE);
 
-        if (contentType == null) {
-            responseMap.put(CommonConstants.CONTENT_TYPE, contentType + "\r\n");
-        }
-
-        if (contentLength == null) {
-            responseMap.put(CommonConstants.CONTENT_LENGTH, contentLength + "\r\n");
-        }
+//        if (version.isEmpty()) {
+//            responseMap.put(CommonConstants.CONTENT_TYPE, ResponseConstants.DEFAULT_VERSION + "\r\n");
+//        }
+//
+//        if (contentLength == null) {
+//            responseMap.put(CommonConstants.CONTENT_LENGTH, contentLength + "\r\n");
+//        }
 
         responseMap.put(CommonConstants.CONNECTION, ResponseConstants.CONNECTION_VALUE);
 
-        if (body.isEmpty()) {
-            responseMap.put(ResponseConstants.BODY, body);
-        }
+//        if (body.isEmpty()) {
+//            responseMap.put(ResponseConstants.BODY, body);
+//        }
 
         for (Map.Entry<String, String> pair : responseMap.entrySet()) {
             String key = pair.getKey();
             String value = pair.getValue();
-            if (key.equals(ResponseConstants.BODY)) {
-                response += value;
-            } else
+//            if (key.equals(ResponseConstants.BODY)) {
+//                response += value;
+//            } else
                 response += key + value;
         }
         String result = response + body;

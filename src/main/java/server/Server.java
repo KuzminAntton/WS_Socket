@@ -1,5 +1,7 @@
 package server;
 
+import com.epam.ws_socket.constants.CommonConstants;
+import handler.impl.AddBook;
 import handler.impl.HelloHandler;
 import method.Request;
 import method.Response;
@@ -60,11 +62,21 @@ public class Server {
 
 //                System.out.println(rq.toString());
 
-                rp= new Response(socket.getOutputStream());
-                HelloHandler handler = new HelloHandler();
-                handler.handle(rq, rp);
+                rp = new Response(socket.getOutputStream());
 
-//                System.out.println(rp.toString());
+                if(rq.getMethod().contains(CommonConstants.GET)) {
+                    HelloHandler helloHandler = new HelloHandler();
+                    helloHandler.handle(rq, rp);
+                    System.out.println(rq.getMethod() + " " + rq.getBody());
+                } else {
+                    System.out.println("I'm in");
+                    AddBook addBook = new AddBook();
+                    System.out.println(rq.getMethod() + " " + rq.getBody());
+                    addBook.handle(rq, rp);
+                }
+
+
+                //System.out.println(rp.toString());
 
 //                writeResponse("hello");
             } catch (Throwable t) {
@@ -82,31 +94,5 @@ public class Server {
             }
 
         }
-
-//        private void writeResponse(String s) throws Throwable {
-//            String response = "HTTP/1.1 200 OK\r\n" +
-//                    "server.Server: YarServer/2009-09-09\r\n" +
-//                    "Content-Type: text/html\r\n" +
-//                    "Content-Length: " + s.length() + "\r\n" +
-//                    "Connection: close\r\n\r\n";
-//            String result = response + s;
-//            socket.getOutputStream().write(result.getBytes());
-////            os.flush();
-//        }
-
-//        private String readInputHeaders() throws Throwable {
-//            BufferedReader br = new BufferedReader(new InputStreamReader(is));
-//            String  str;
-//            while(true) {
-//                str = br.readLine();
-//                System.out.println(str);
-//
-//                if(str == null || str.trim().length() == 0) {
-//                    break;
-//                }
-//            }
-//
-//            return "Hello";
-//        }
     }
 }
