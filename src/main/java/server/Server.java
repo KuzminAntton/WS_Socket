@@ -1,8 +1,6 @@
 package server;
 
-import com.epam.ws_socket.constants.CommonConstants;
-import handler.impl.AddBook;
-import handler.impl.HelloHandler;
+import handler.HandlerFactory;
 import method.Request;
 import method.Response;
 
@@ -64,16 +62,21 @@ public class Server {
 
                 rp = new Response(socket.getOutputStream());
 
-                if(rq.getMethod().contains(CommonConstants.GET)) {
-                    HelloHandler helloHandler = new HelloHandler();
-                    helloHandler.handle(rq, rp);
-                    System.out.println(rq.getMethod() + " " + rq.getBody());
-                } else {
-                    System.out.println("I'm in");
-                    AddBook addBook = new AddBook();
-                    System.out.println(rq.getMethod() + " " + rq.getBody());
-                    addBook.handle(rq, rp);
-                }
+//                if(rq.getMethod().contains(CommonConstants.GET)) {
+//                    HelloHandler helloHandler = new HelloHandler();
+//                    helloHandler.handle(rq, rp);
+//                    System.out.println(rq.getMethod() + " " + rq.getBody());
+//                } else {
+//                    System.out.println("I'm in");
+//                    AddBook addBook = new AddBook();
+//                    System.out.println(rq.getMethod() + " " + rq.getBody());
+//                    addBook.handle(rq, rp);
+//                }
+
+                HandlerFactory handlerFactory = new HandlerFactory();
+                handlerFactory.getHndlerDirection().direct(rq,rp);
+
+
 
 
                 //System.out.println(rp.toString());

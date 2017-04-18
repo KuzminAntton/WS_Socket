@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.xml.bind.annotation.*;
-import java.util.List;
+import java.util.HashSet;
 
 @XmlRootElement(name = "store")
 @XmlAccessorType(XmlAccessType.NONE)
@@ -14,20 +14,18 @@ public class BooksPojo {
     @XmlElementWrapper(name = "books")
     @XmlElement(name = "book")
     @JsonProperty("books")
-    private List<Book> book;
+    private HashSet<Book> book;
 
-    public BooksPojo() {
+    public BooksPojo(HashSet<Book> books) {
+        this.book = books;
     }
 
-    public BooksPojo(List<Book> book) {
-        this.book = book;
-    }
 
-    public List<Book> getBook() {
+    public HashSet<Book> getBook() {
         return book;
     }
 
-    public void setBooks(List<Book> book) {
+    public void setBooks(HashSet<Book> book) {
         this.book = book;
     }
 }

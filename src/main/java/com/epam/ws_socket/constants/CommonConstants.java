@@ -50,4 +50,9 @@ public class CommonConstants {
 
     public static final String ACCEPT_TYPE_JSON = "application/json";
 
+
+
+
+
+
 }
