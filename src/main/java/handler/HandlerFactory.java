@@ -1,9 +1,10 @@
 package handler;
 
 
-import handler.impl.AddBook;
-import handler.impl.GetAllBooks;
-import handler.impl.MainPage;
+import handler.impl.put.AddBook;
+import handler.impl.get.GetAllBooks;
+import handler.impl.get.GetCertainBook;
+import handler.impl.get.GetMainPage;
 
 public class HandlerFactory {
 
@@ -11,11 +12,13 @@ public class HandlerFactory {
 
     private final AddBook addBook = new AddBook();
 
-    private final MainPage helloHandler = new MainPage();
+    private final GetMainPage helloHandler = new GetMainPage();
 
     private final GetAllBooks getAllBooks = new GetAllBooks();
 
-    private final HandlerRouter hndlerDirection = new HandlerRouter();
+    private final HandlerRouter handlerRouter = new HandlerRouter();
+
+    private final GetCertainBook getCertainBook = new GetCertainBook();
 
     public HandlerFactory() {
 
@@ -30,7 +33,7 @@ public class HandlerFactory {
     }
 
 
-    public MainPage getHelloHandler() {
+    public GetMainPage getHelloHandler() {
         return helloHandler;
     }
 
@@ -39,8 +42,13 @@ public class HandlerFactory {
         return getAllBooks;
     }
 
-    public HandlerRouter getHndlerDirection() {
-        return hndlerDirection;
+    public GetCertainBook getCertainBook() {
+        return getCertainBook;
+    }
+
+
+    public HandlerRouter getHandlerRouter() {
+        return handlerRouter;
     }
 
 }

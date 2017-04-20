@@ -1,4 +1,4 @@
-package handler.impl;
+package handler.impl.get;
 
 import com.epam.ws_socket.constants.ResponseConstants;
 import handler.IHandle;
@@ -8,7 +8,7 @@ import method.Response;
 import java.io.FileReader;
 import java.io.IOException;
 
-public class MainPage implements IHandle {
+public class GetMainPage implements IHandle {
 
     public void handle(Request rq, Response rp) throws IOException {
         boolean isMap = true;

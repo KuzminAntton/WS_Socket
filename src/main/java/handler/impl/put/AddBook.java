@@ -1,4 +1,4 @@
-package handler.impl;
+package handler.impl.put;
 
 import bean.BookPojo;
 import com.epam.ws_socket.constants.ResponseConstants;

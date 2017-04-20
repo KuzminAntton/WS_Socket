@@ -14,6 +14,8 @@ public class HandlerRouter {
             handlerFactory.getHelloHandler().handle(rq,rp);
             System.out.println(rp);
         } else if(rq.getPath().contains(ActionConstants.ACTION_ADD_BOOK)) {
+            handlerFactory.getCertainBook().handle(rq, rp);
+        } else if(rq.getPath().contains(ActionConstants.ACTION_ADD_BOOK)) {
             handlerFactory.getAddBook().handle(rq,rp);
         } else if(rq.getPath().contains(ActionConstants.ACTION_GET_ALL_BOOKS)) {
             handlerFactory.getAllBooks().handle(rq,rp);
