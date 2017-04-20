@@ -22,6 +22,7 @@ public class GetMainPage implements IHandle {
             while((c=reader.read())!=-1){
                 str.append((char)c);
             }
+            rp.setBody(str.toString());
             rp.setContentLength(str.length() + "");
         rp.setConnection(ResponseConstants.CONNECTION_VALUE);
         rp.write();

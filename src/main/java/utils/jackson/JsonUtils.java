@@ -2,6 +2,7 @@ package utils.jackson;
 
 import bean.Book;
 import bean.BooksPojo;
+import com.epam.ws_socket.constants.CommonConstants;
 import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import method.Response;
@@ -17,12 +18,14 @@ public class JsonUtils {
 
     public static void writeBookInJsonFormat(Book book, String body, Response rp) {
         body = JsonUtils.toJson(book);
+        rp.setContentType(CommonConstants.ACCEPT_TYPE_JSON);
         rp.setContentLength(String.valueOf(body.getBytes().length));
         rp.setBody(body);
 
     }
     public static void writeBookInJsonFormat(BooksPojo book, String body, Response rp) {
         body = JsonUtils.toJson(book);
+        rp.setContentType(CommonConstants.ACCEPT_TYPE_JSON);
         rp.setContentLength(String.valueOf(body.getBytes().length));
         rp.setBody(body);
 

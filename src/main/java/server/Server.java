@@ -46,22 +46,20 @@ public class Server {
         private Socket socket;
 
         private SocketProcessor(Socket socket) throws Throwable {
-//            this.s = s;
-//            this.is = s.getInputStream();
             this.socket = socket;
-
         }
 
         public void run() {
             try {
                 BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-                rq = new Request();
-                rq.parseRequest(br);
+                rq = new Request(br);
 
                 rp = new Response(socket.getOutputStream());
 
                 HandlerFactory handlerFactory = new HandlerFactory();
-                handlerFactory.getHndlerDirection().direct(rq,rp);
+                handlerFactory.getHandlerRouter().direct(rq,rp);
+
+
 
             } catch (Throwable t) {
                 /*do nothing*/

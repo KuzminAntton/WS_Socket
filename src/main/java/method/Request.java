@@ -27,9 +27,9 @@ public class Request {
     private String body;
 
 
-//    public Request(BufferedReader bfr) throws IOException {
-//        parseRequest(bfr);
-//    }
+    public Request(BufferedReader bfr) throws IOException {
+        parseRequest(bfr);
+    }
 
     public String getMethod() {
         return method;

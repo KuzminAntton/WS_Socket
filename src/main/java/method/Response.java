@@ -31,19 +31,15 @@ public class Response {
 
         responseMap.put(ResponseConstants.SERVER, ResponseConstants.SERVER_VALUE);
 
-//        if (version.isEmpty()) {
-//            responseMap.put(CommonConstants.CONTENT_TYPE, ResponseConstants.DEFAULT_VERSION + "\r\n");
-//        }
-//
-        if (contentLength == null) {
-            responseMap.put(CommonConstants.CONTENT_LENGTH, contentLength + "\r\n");
-        }
+        responseMap.put(CommonConstants.CONTENT_TYPE, contentType + "\r\n");
 
         responseMap.put(CommonConstants.CONNECTION, ResponseConstants.CONNECTION_VALUE);
 
-//        if (body.isEmpty()) {
-//            responseMap.put(ResponseConstants.BODY, body);
-//        }
+        responseMap.put("", "");
+
+        responseMap.put("", "");
+
+        responseMap.put("",body);
 
         for (Map.Entry<String, String> pair : responseMap.entrySet()) {
             String key = pair.getKey();

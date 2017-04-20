@@ -7,7 +7,7 @@ public class ResponseConstants {
 
     public static final String STATUS_CODE_201_CREATED = " 201 Created \r\n";
 
-    public static final String STATUS_CODE_400_BAD_REQUEST = " 400 Bad Request \r\n";
+    public static final String STATUS_CODE_400_BAD_REQUEST = "400 Bad Request \r\n";
 
     public static final String SERVER = "Server:";
 
@@ -17,7 +17,7 @@ public class ResponseConstants {
 
     public static final String CONTENT_TYPE_XML_VVALUE = "\r\n";
 
-    public static final String CONNECTION_VALUE = "close";
+    public static final String CONNECTION_VALUE = "close\r\n\r\n";
 
     public static final String BODY = "body";
 }

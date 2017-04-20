@@ -8,6 +8,7 @@ import handler.IHandle;
 import method.Request;
 import method.Response;
 import store.Store;
+import utils.DataUtils;
 import utils.jackson.JsonUtils;
 import utils.xml.XMLHelper;
 
@@ -35,6 +36,8 @@ public class GetAllBooks implements IHandle {
         rp.setVersion(rq.getVersion());
         rp.setStatusCode(ResponseConstants.STATUS_CODE_200_OK);
         rp.setContentType(rq.getAccept());
+        rp.setServer(ResponseConstants.SERVER_VALUE);
+        rp.setDate(DataUtils.getCurrentDataByFormat(CommonConstants.DATA_FORMAT_FOR_RESPONSE));
 
         BooksPojo book = new BooksPojo(books);
 

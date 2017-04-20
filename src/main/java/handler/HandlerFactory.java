@@ -12,7 +12,7 @@ public class HandlerFactory {
 
     private final AddBook addBook = new AddBook();
 
-    private final GetMainPage helloHandler = new GetMainPage();
+    private final GetMainPage getMainPage = new GetMainPage();
 
     private final GetAllBooks getAllBooks = new GetAllBooks();
 
@@ -33,8 +33,8 @@ public class HandlerFactory {
     }
 
 
-    public GetMainPage getHelloHandler() {
-        return helloHandler;
+    public GetMainPage getGetMainPage() {
+        return getMainPage;
     }
 
 
