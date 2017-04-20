@@ -9,11 +9,10 @@ import method.Request;
 import method.Response;
 import store.Store;
 import utils.jackson.JsonUtils;
-import utils.marshaller.MarshallerHelper;
+import utils.xml.XMLHelper;
 
 import javax.xml.bind.JAXBException;
 import java.io.IOException;
-import java.io.StringWriter;
 import java.util.HashSet;
 
 
@@ -40,18 +39,9 @@ public class GetAllBooks implements IHandle {
         BooksPojo book = new BooksPojo(books);
 
         if (acceptType.equals(CommonConstants.ACCEPT_TYPE_XML)) {
-
-            StringWriter writer = new StringWriter();
-            MarshallerHelper.marshall(book, writer);
-
-            body = writer.toString();
-
-            rp.setContentLength(String.valueOf(body.getBytes().length));
-            rp.setBody(body);
+            XMLHelper.writeBookInXMLFormat(book, body, rp);
         } else {
-            body = JsonUtils.toJson(book);
-            rp.setContentLength(String.valueOf(body.getBytes().length));
-            rp.setBody(body);
+            JsonUtils.writeBookInJsonFormat(book, body, rp);
         }
 
         try {

@@ -60,17 +60,6 @@ public class Server {
 
                 rp = new Response(socket.getOutputStream());
 
-//                if(rq.getMethod().contains(CommonConstants.GET)) {
-//                    MainPage helloHandler = new MainPage();
-//                    helloHandler.handle(rq, rp);
-//                    System.out.println(rq.getMethod() + " " + rq.getBody());
-//                } else {
-//                    System.out.println("I'm in");
-//                    AddBook addBook = new AddBook();
-//                    System.out.println(rq.getMethod() + " " + rq.getBody());
-//                    addBook.handle(rq, rp);
-//                }
-
                 HandlerFactory handlerFactory = new HandlerFactory();
                 handlerFactory.getHndlerDirection().direct(rq,rp);
 

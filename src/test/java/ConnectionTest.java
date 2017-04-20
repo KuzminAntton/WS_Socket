@@ -2,10 +2,10 @@ import org.junit.Test;
 
 import static com.jayway.restassured.RestAssured.given;
 
-public class HelloWorldRestAssured {
+public class ConnectionTest {
 
     @Test
-    public void makeSureThatGoogleIsUp() {
+    public void makeSureThatServerIsUp() {
         given().when().get("http://localhost:8080").then().statusCode(200);
     }
 

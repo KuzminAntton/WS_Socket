@@ -1,6 +1,7 @@
 package store;
 
 import bean.Book;
+import method.Request;
 
 import java.util.HashSet;
 
@@ -14,10 +15,9 @@ public class Store {
         return store;
     }
 
-    public static Book getBook(Book book) {
-        if(store.contains(book)) {
-            return book;
-        }
+    public static Book getCertainBook(Request rq) {
+        Book book = null;
+
         return null;
     }
 

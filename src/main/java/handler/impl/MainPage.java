@@ -23,7 +23,6 @@ public class MainPage implements IHandle {
                 str.append((char)c);
             }
             rp.setContentLength(str.length() + "");
-        //rp.setBody(str.toString());
         rp.setConnection(ResponseConstants.CONNECTION_VALUE);
         rp.write();
     }
