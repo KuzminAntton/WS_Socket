@@ -58,12 +58,10 @@ public class Server {
                 rq = new Request();
                 rq.parseRequest(br);
 
-//                System.out.println(rq.toString());
-
                 rp = new Response(socket.getOutputStream());
 
 //                if(rq.getMethod().contains(CommonConstants.GET)) {
-//                    HelloHandler helloHandler = new HelloHandler();
+//                    MainPage helloHandler = new MainPage();
 //                    helloHandler.handle(rq, rp);
 //                    System.out.println(rq.getMethod() + " " + rq.getBody());
 //                } else {
@@ -76,12 +74,6 @@ public class Server {
                 HandlerFactory handlerFactory = new HandlerFactory();
                 handlerFactory.getHndlerDirection().direct(rq,rp);
 
-
-
-
-                //System.out.println(rp.toString());
-
-//                writeResponse("hello");
             } catch (Throwable t) {
                 /*do nothing*/
                 t.printStackTrace();

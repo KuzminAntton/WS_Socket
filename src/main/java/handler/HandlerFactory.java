@@ -3,7 +3,7 @@ package handler;
 
 import handler.impl.AddBook;
 import handler.impl.GetAllBooks;
-import handler.impl.HelloHandler;
+import handler.impl.MainPage;
 
 public class HandlerFactory {
 
@@ -11,11 +11,11 @@ public class HandlerFactory {
 
     private final AddBook addBook = new AddBook();
 
-    private final HelloHandler helloHandler = new HelloHandler();
+    private final MainPage helloHandler = new MainPage();
 
     private final GetAllBooks getAllBooks = new GetAllBooks();
 
-    private final HndlerDirection hndlerDirection = new HndlerDirection();
+    private final HandlerRouter hndlerDirection = new HandlerRouter();
 
     public HandlerFactory() {
 
@@ -30,7 +30,7 @@ public class HandlerFactory {
     }
 
 
-    public HelloHandler getHelloHandler() {
+    public MainPage getHelloHandler() {
         return helloHandler;
     }
 
@@ -39,7 +39,7 @@ public class HandlerFactory {
         return getAllBooks;
     }
 
-    public HndlerDirection getHndlerDirection() {
+    public HandlerRouter getHndlerDirection() {
         return hndlerDirection;
     }
 

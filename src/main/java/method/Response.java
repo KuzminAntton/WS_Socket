@@ -35,9 +35,9 @@ public class Response {
 //            responseMap.put(CommonConstants.CONTENT_TYPE, ResponseConstants.DEFAULT_VERSION + "\r\n");
 //        }
 //
-//        if (contentLength == null) {
-//            responseMap.put(CommonConstants.CONTENT_LENGTH, contentLength + "\r\n");
-//        }
+        if (contentLength == null) {
+            responseMap.put(CommonConstants.CONTENT_LENGTH, contentLength + "\r\n");
+        }
 
         responseMap.put(CommonConstants.CONNECTION, ResponseConstants.CONNECTION_VALUE);
 
@@ -53,7 +53,7 @@ public class Response {
 //            } else
                 response += key + value;
         }
-        String result = response + body;
+        String result = response;
         os.write(result.getBytes());
     }
 

@@ -8,7 +8,8 @@ import method.Response;
 import java.io.FileReader;
 import java.io.IOException;
 
-public class HelloHandler implements IHandle {
+public class MainPage implements IHandle {
+
     public void handle(Request rq, Response rp) throws IOException {
         boolean isMap = true;
         rp.setVersion(rq.getVersion());
@@ -21,9 +22,9 @@ public class HelloHandler implements IHandle {
             while((c=reader.read())!=-1){
                 str.append((char)c);
             }
-        rp.setBody(str.toString());
+            rp.setContentLength(str.length() + "");
+        //rp.setBody(str.toString());
         rp.setConnection(ResponseConstants.CONNECTION_VALUE);
         rp.write();
-
     }
 }
