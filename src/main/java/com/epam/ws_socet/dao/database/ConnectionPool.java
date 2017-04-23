@@ -2,7 +2,6 @@ package com.epam.ws_socet.dao.database;
 
 
 import com.epam.ws_socet.dao.exception.ConnectionPoolException;
-import com.epam.ws_socet.dao.exception.ConnectionPoolException;
 import org.apache.log4j.Logger;
 
 import java.sql.*;
