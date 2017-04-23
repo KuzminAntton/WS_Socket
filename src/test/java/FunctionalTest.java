@@ -4,7 +4,7 @@ import org.junit.BeforeClass;
 public class FunctionalTest {
     @BeforeClass
     public static void setup() {
-        String port = System.getProperty("server.port");
+        String port = System.getProperty("com.epam.ws_socet.bean.server.port");
         if (port == null) {
             RestAssured.port = Integer.valueOf(8080);
         }
@@ -12,13 +12,13 @@ public class FunctionalTest {
             RestAssured.port = Integer.valueOf(port);
         }
 
-        String basePath = System.getProperty("server.base");
+        String basePath = System.getProperty("com.epam.ws_socet.bean.server.base");
         if(basePath==null){
             basePath = "/rest-garage-sample/";
         }
         RestAssured.basePath = basePath;
 
-        String baseHost = System.getProperty("server.host");
+        String baseHost = System.getProperty("com.epam.ws_socet.bean.server.host");
         if(baseHost==null){
             baseHost = "http://localhost";
         }

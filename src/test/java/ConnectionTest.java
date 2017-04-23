@@ -1,4 +1,4 @@
-import bean.Book;
+import com.epam.ws_socet.bean.Book;
 import com.jayway.restassured.response.Response;
 import org.junit.Test;
 
