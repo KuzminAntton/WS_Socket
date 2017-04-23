@@ -59,10 +59,7 @@ public class Server {
                 HandlerFactory handlerFactory = new HandlerFactory();
                 handlerFactory.getHandlerRouter().direct(rq,rp);
 
-
-
             } catch (Throwable t) {
-                /*do nothing*/
                 t.printStackTrace();
             }
 
@@ -70,7 +67,6 @@ public class Server {
                 try {
                     socket.close();
                 } catch (Throwable t) {
-                    /*do nothing*/
                     t.printStackTrace();
                 }
             }
