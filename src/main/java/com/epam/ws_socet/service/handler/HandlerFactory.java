@@ -2,6 +2,8 @@ package com.epam.ws_socet.service.handler;
 
 
 import com.epam.ws_socet.controller.HandlerRouter;
+import com.epam.ws_socet.service.handler.impl.delete.DeleteCertainBook;
+import com.epam.ws_socet.service.handler.impl.post.UpdateCertainBook;
 import com.epam.ws_socet.service.handler.impl.put.AddBook;
 import com.epam.ws_socet.service.handler.impl.get.GetAllBooks;
 import com.epam.ws_socet.service.handler.impl.get.GetCertainBook;
@@ -20,6 +22,10 @@ public class HandlerFactory {
     private final HandlerRouter handlerRouter = new HandlerRouter();
 
     private final GetCertainBook getCertainBook = new GetCertainBook();
+
+    private final UpdateCertainBook updateCertainBook = new UpdateCertainBook();
+
+    private final DeleteCertainBook deleteCertainBook = new DeleteCertainBook();
 
     public HandlerFactory() {
 
@@ -47,6 +53,9 @@ public class HandlerFactory {
         return getCertainBook;
     }
 
+    public UpdateCertainBook getUpdateCertainBook() {return updateCertainBook; }
+
+    public DeleteCertainBook getDeleteCertainBook() {return deleteCertainBook; }
 
     public HandlerRouter getHandlerRouter() {
         return handlerRouter;
