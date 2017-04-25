@@ -1,4 +1,4 @@
-package com.epam.ws_socet.service.handler.impl.get;
+package com.epam.ws_socet.service.handler.impl.post;
 
 import com.epam.ws_socet.bean.Book;
 import com.epam.ws_socet.bean.BookPojo;
@@ -9,26 +9,30 @@ import com.epam.ws_socet.service.handler.method.Response;
 import com.epam.ws_socet.utils.constants.ResponseConstants;
 import com.epam.ws_socet.utils.jackson.JsonUtils;
 import com.epam.ws_socet.utils.marshaller.MarshallerHelper;
-import com.epam.ws_socet.utils.xml.XMLHelper;
 
 import javax.xml.bind.JAXBException;
 import java.io.IOException;
 
-public class GetCertainBook {
+/**
+ * Created by anton on 25.4.17.
+ */
+public class UpdateCertainBook {
+
     public void handle(Request rq, Response rp) throws IOException {
-    String acceptType = rq.getAccept();
+        String acceptType = rq.getAccept();
 
         try {
-        response(rq, rp, acceptType);
-    } catch (JAXBException e) {
-        e.printStackTrace();
+            response(rq, rp, acceptType);
+        } catch (JAXBException e) {
+            e.printStackTrace();
+        }
     }
-}
 
     private void response(Request rq, Response rp, String acceptType) throws JAXBException, IOException {
         boolean isMap = true;
         String body = "";
         rp.setVersion(rq.getVersion());
+
         DBWorker dbWorker = DAOFactory.getInstance().getDbWorker();
 
         BookPojo bookCreate = null;
@@ -36,16 +40,14 @@ public class GetCertainBook {
             if(rq.getContentType().contains("application/json")) {
                 bookCreate = JsonUtils.fromJson(rq.getBody(), BookPojo.class);
                 Book book = bookCreate.getBook();
-                if(dbWorker.getAllBooks().contains(book)) {
-                    JsonUtils.writeBookInJsonFormat(book, body, rp);
-                }
+                dbWorker.updateCertainBooks(book);
+                rp.setStatusCode(ResponseConstants.STATUS_CODE_203_UPDATED);
+
             } else if (rq.getContentType().contains("application/xml")) {
                 bookCreate = MarshallerHelper.unmarshall(rq.getBody(), BookPojo.class);
                 Book book = bookCreate.getBook();
-                if(dbWorker.getAllBooks().contains(book)) {
-                    XMLHelper.writeBookInXMLFormat(book, body, rp);
-                }
-
+                dbWorker.updateCertainBooks(book);
+                rp.setStatusCode(ResponseConstants.STATUS_CODE_203_UPDATED);
             }
 
         } catch (Exception ex) {
@@ -53,7 +55,6 @@ public class GetCertainBook {
             rp.setStatusCode(ResponseConstants.STATUS_CODE_400_BAD_REQUEST);
         }
 
-
         rp.write();
     }
-    }
+}

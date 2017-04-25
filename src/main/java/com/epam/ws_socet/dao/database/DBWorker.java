@@ -18,6 +18,8 @@ public class DBWorker {
 
     private ConnectionPool pool = new ConnectionPool();
     private String sqlSearchByFreeCriteriaInquiry = "SELECT * FROM books";
+    private String deleteStatement = "DELETE FROM Books.books";
+    private String updateStatement = "UPDATE Books.books";
     private String sqlSearchByConcreteCriteriaInquiry = "SELECT * FROM books where ";
     private String sqlAddCommand = "INSERT INTO books(book_language,book_edition,book_author,book_date) " +
             "VALUES(?,?,?,?,?)";
@@ -51,7 +53,7 @@ public class DBWorker {
         try {
         con = pool.takeConnection();
 
-        preparedStatement = (PreparedStatement) con.prepareStatement(sqlSearchByFreeCriteriaInquiry);
+        preparedStatement = con.prepareStatement(sqlSearchByFreeCriteriaInquiry);
 
         rs = preparedStatement.executeQuery();
 
@@ -86,6 +88,98 @@ public class DBWorker {
 
         return books;
 }
+
+    public boolean deleteCertainBooks(Book book) throws DAOException {
+        boolean isDelete = false;
+
+        Connection con = null;
+        ResultSet rs = null;
+        PreparedStatement preparedStatement = null;
+
+        try {
+            con = pool.takeConnection();
+
+            preparedStatement = con.prepareStatement(deleteStatement + " where " +
+                    "book_language ='"+ book.getLanguage()+"'"
+                    +"and book_edition ='"+ book.getEdition()+"'"
+                    +"and book_date ='"+ book.getDate()+"'"
+                    +"and book_author ='"+ book.getAuthor()+"'"
+            );
+
+            rs = preparedStatement.executeQuery();
+
+            isDelete = true;
+
+        } catch (SQLException | ConnectionPoolException e) {
+            log.error(e);
+            throw new DAOException(e);
+        } finally {
+            try {
+                preparedStatement.close();
+            } catch (SQLException e) {
+                log.error(e);
+            }
+
+            try {
+                con.close();
+            } catch (SQLException e) {
+                log.error(e);
+            }
+
+        }
+
+
+        return isDelete;
     }
+
+
+
+    public boolean updateCertainBooks(Book book) throws DAOException {
+        boolean isDelete = false;
+
+        Connection con = null;
+        ResultSet rs = null;
+        PreparedStatement preparedStatement = null;
+
+        try {
+            con = pool.takeConnection();
+
+            preparedStatement = con.prepareStatement(updateStatement + " SET " +
+                    "book_language ='"+ book.getLanguage()+"'"
+                    +"and book_edition ='"+ book.getEdition()+"'"
+                    +"and book_date ='"+ book.getDate()+"'"
+                    +"and book_author ='"+ book.getAuthor()+"'"
+                    +"WHERE book_id = " + book.getId()
+            );
+
+            rs = preparedStatement.executeQuery();
+
+            isDelete = true;
+
+        } catch (SQLException | ConnectionPoolException e) {
+            log.error(e);
+            throw new DAOException(e);
+        } finally {
+            try {
+                preparedStatement.close();
+            } catch (SQLException e) {
+                log.error(e);
+            }
+
+            try {
+                con.close();
+            } catch (SQLException e) {
+                log.error(e);
+            }
+
+        }
+
+
+        return isDelete;
+    }
+
+}
+
+
 
 
