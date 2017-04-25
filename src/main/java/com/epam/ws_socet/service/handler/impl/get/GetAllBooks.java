@@ -2,13 +2,15 @@ package com.epam.ws_socet.service.handler.impl.get;
 
 import com.epam.ws_socet.bean.Book;
 import com.epam.ws_socet.bean.BooksPojo;
-import com.epam.ws_socet.utils.constants.CommonConstants;
-import com.epam.ws_socet.utils.constants.ResponseConstants;
+import com.epam.ws_socet.dao.database.DBWorker;
+import com.epam.ws_socet.dao.exception.DAOException;
+import com.epam.ws_socet.dao.factory.DAOFactory;
 import com.epam.ws_socet.service.handler.IHandle;
 import com.epam.ws_socet.service.handler.method.Request;
 import com.epam.ws_socet.service.handler.method.Response;
-import com.epam.ws_socet.store.Store;
 import com.epam.ws_socet.utils.DataUtils;
+import com.epam.ws_socet.utils.constants.CommonConstants;
+import com.epam.ws_socet.utils.constants.ResponseConstants;
 import com.epam.ws_socet.utils.jackson.JsonUtils;
 import com.epam.ws_socet.utils.xml.XMLHelper;
 
@@ -24,14 +26,17 @@ public class GetAllBooks implements IHandle {
 
         try {
             response(rq, rp, acceptType);
-        } catch (JAXBException e) {
+        } catch (JAXBException | DAOException e) {
             e.printStackTrace();
         }
     }
 
-    private void response(Request rq, Response rp, String acceptType) throws JAXBException {
+    private void response(Request rq, Response rp, String acceptType) throws JAXBException, DAOException {
         String body = "";
-        HashSet<Book> books = Store.getAllBook();
+        //HashSet<Book> books = Store.getAllBook();
+
+        DBWorker dbWorker = DAOFactory.getInstance().getDbWorker();
+        HashSet<Book> books = dbWorker.getAllBooks();
 
         rp.setVersion(rq.getVersion());
         rp.setStatusCode(ResponseConstants.STATUS_CODE_200_OK);
