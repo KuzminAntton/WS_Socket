@@ -34,6 +34,7 @@ public class JsonUtils {
     public static <T> T fromJson(String json, Class<T> classOfT) {
         try {
             return mapper.readValue(json, classOfT);
+
         } catch (Exception e) {
             throw new RuntimeException(e.getMessage(), e);
         }

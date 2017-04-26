@@ -110,12 +110,10 @@ public class Book {
 
     @Override
     public String toString() {
-        return "Book{" +
-                "id=" + id +
-                ", language='" + language + '\'' +
-                ", edition='" + edition + '\'' +
-                ", author='" + author + '\'' +
-                ", date='" + date + '\'' +
-                '}';
+        return "{\"book\":{\"id\":\""+ id +"\"," +
+                "\"language\":\""+language+"\"," +
+                "\"edition\":\""+edition+"\"," +
+                "\"author\":\""+author+"\"," +
+                "\"create_date\":\""+date+"\"}}";
     }
 }

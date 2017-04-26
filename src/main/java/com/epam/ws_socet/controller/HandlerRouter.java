@@ -1,5 +1,6 @@
 package com.epam.ws_socet.controller;
 
+import com.epam.ws_socet.dao.exception.DAOException;
 import com.epam.ws_socet.service.handler.HandlerFactory;
 import com.epam.ws_socet.service.handler.method.Request;
 import com.epam.ws_socet.service.handler.method.Response;
@@ -9,7 +10,7 @@ import java.io.IOException;
 
 public class HandlerRouter {
 
-    public void direct(Request rq, Response rp) throws IOException {
+    public void direct(Request rq, Response rp) throws IOException, DAOException {
         HandlerFactory handlerFactory = HandlerFactory.getInstance();
         if(rq.getPath().equals(ActionConstants.ACTION_MAIN_PAGE)){
             handlerFactory.getGetMainPage().handle(rq,rp);

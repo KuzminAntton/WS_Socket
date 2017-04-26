@@ -13,9 +13,6 @@ import com.epam.ws_socet.utils.marshaller.MarshallerHelper;
 import javax.xml.bind.JAXBException;
 import java.io.IOException;
 
-/**
- * Created by anton on 25.4.17.
- */
 public class UpdateCertainBook {
 
     public void handle(Request rq, Response rp) throws IOException {

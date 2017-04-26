@@ -23,7 +23,6 @@ public class Store {
 
     public static void addBook(Book book) {
         store.add(book);
-        printAllBooks();
 
     }
 
